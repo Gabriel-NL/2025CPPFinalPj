@@ -41,7 +41,7 @@ ACPPGameProjectPawn::ACPPGameProjectPawn()
 
 	static ConstructorHelpers::FClassFinder<UObject> AnimBPClass(TEXT("/Game/Vehicle/Sedan/Sedan_AnimBP"));
 	GetMesh()->SetAnimInstanceClass(AnimBPClass.Class);
-	
+
 	// Simulation
 	UWheeledVehicleMovementComponent4W* Vehicle4W = CastChecked<UWheeledVehicleMovementComponent4W>(GetVehicleMovement());
 
@@ -94,7 +94,7 @@ ACPPGameProjectPawn::ACPPGameProjectPawn()
 
 	//Setup TextRenderMaterial
 	static ConstructorHelpers::FObjectFinder<UMaterial> TextMaterial(TEXT("Material'/Engine/EngineMaterials/AntiAliasedTextMaterialTranslucent.AntiAliasedTextMaterialTranslucent'"));
-	
+
 	UMaterialInterface* Material = TextMaterial.Object;
 
 	// Create text render component for in car speed display
@@ -108,11 +108,11 @@ ACPPGameProjectPawn::ACPPGameProjectPawn()
 	// Create text render component for in car gear display
 	InCarGear = CreateDefaultSubobject<UTextRenderComponent>(TEXT("IncarGear"));
 	InCarGear->SetTextMaterial(Material);
-	InCarGear->SetRelativeLocation(FVector(66.0f, -9.0f, 95.0f));	
-	InCarGear->SetRelativeRotation(FRotator(25.0f, 180.0f,0.0f));
+	InCarGear->SetRelativeLocation(FVector(66.0f, -9.0f, 95.0f));
+	InCarGear->SetRelativeRotation(FRotator(25.0f, 180.0f, 0.0f));
 	InCarGear->SetRelativeScale3D(FVector(1.0f, 0.4f, 0.4f));
 	InCarGear->SetupAttachment(GetMesh());
-	
+
 	// Colors for the incar gear display. One for normal one for reverse
 	GearDisplayReverseColor = FColor(255, 0, 0, 255);
 	GearDisplayColor = FColor(255, 255, 255, 255);
@@ -140,7 +140,7 @@ void ACPPGameProjectPawn::SetupPlayerInputComponent(class UInputComponent* Playe
 	PlayerInputComponent->BindAction("Handbrake", IE_Released, this, &ACPPGameProjectPawn::OnHandbrakeReleased);
 	PlayerInputComponent->BindAction("SwitchCamera", IE_Pressed, this, &ACPPGameProjectPawn::OnToggleCamera);
 
-	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ACPPGameProjectPawn::OnResetVR); 
+	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ACPPGameProjectPawn::OnResetVR);
 }
 
 void ACPPGameProjectPawn::MoveForward(float Val)
@@ -170,10 +170,10 @@ void ACPPGameProjectPawn::OnToggleCamera()
 
 void ACPPGameProjectPawn::EnableIncarView(const bool bState, const bool bForce)
 {
-	if ((bState != bInCarCameraActive) || ( bForce == true ))
+	if ((bState != bInCarCameraActive) || (bForce == true))
 	{
 		bInCarCameraActive = bState;
-		
+
 		if (bState == true)
 		{
 			OnResetVR();
@@ -185,7 +185,7 @@ void ACPPGameProjectPawn::EnableIncarView(const bool bState, const bool bForce)
 			InternalCamera->Deactivate();
 			Camera->Activate();
 		}
-		
+
 		InCarSpeed->SetVisibility(bInCarCameraActive);
 		InCarGear->SetVisibility(bInCarCameraActive);
 	}
@@ -198,7 +198,7 @@ void ACPPGameProjectPawn::Tick(float Delta)
 
 	// Setup the flag to say we are in reverse gear
 	bInReverseGear = GetVehicleMovement()->GetCurrentGear() < 0;
-	
+
 	// Update the strings used in the hud (incar and onscreen)
 	UpdateHUDStrings();
 
@@ -214,7 +214,7 @@ void ACPPGameProjectPawn::Tick(float Delta)
 #endif // HMD_MODULE_INCLUDED
 	if (bHMDActive == false)
 	{
-		if ( (InputComponent) && (bInCarCameraActive == true ))
+		if ((InputComponent) && (bInCarCameraActive == true))
 		{
 			FRotator HeadRotation = InternalCamera->GetRelativeRotation();
 			HeadRotation.Pitch += InputComponent->GetAxisValue(LookUpBinding);
@@ -232,8 +232,10 @@ void ACPPGameProjectPawn::BeginPlay()
 #if HMD_MODULE_INCLUDED
 	bEnableInCar = UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled();
 #endif // HMD_MODULE_INCLUDED
-	EnableIncarView(bEnableInCar,true);
+	EnableIncarView(bEnableInCar, true);
 }
+
+
 
 void ACPPGameProjectPawn::OnResetVR()
 {
@@ -254,7 +256,7 @@ void ACPPGameProjectPawn::UpdateHUDStrings()
 
 	// Using FText because this is display text that should be localizable
 	SpeedDisplayString = FText::Format(LOCTEXT("SpeedFormat", "{0} km/h"), FText::AsNumber(KPH_int));
-	
+
 	if (bInReverseGear == true)
 	{
 		GearDisplayString = FText(LOCTEXT("ReverseGear", "R"));
@@ -263,18 +265,18 @@ void ACPPGameProjectPawn::UpdateHUDStrings()
 	{
 		int32 Gear = GetVehicleMovement()->GetCurrentGear();
 		GearDisplayString = (Gear == 0) ? LOCTEXT("N", "N") : FText::AsNumber(Gear);
-	}	
+	}
 }
 
 void ACPPGameProjectPawn::SetupInCarHUD()
 {
 	APlayerController* PlayerController = Cast<APlayerController>(GetController());
-	if ((PlayerController != nullptr) && (InCarSpeed != nullptr) && (InCarGear != nullptr) )
+	if ((PlayerController != nullptr) && (InCarSpeed != nullptr) && (InCarGear != nullptr))
 	{
 		// Setup the text render component strings
 		InCarSpeed->SetText(SpeedDisplayString);
 		InCarGear->SetText(GearDisplayString);
-		
+
 		if (bInReverseGear == false)
 		{
 			InCarGear->SetTextRenderColor(GearDisplayColor);
