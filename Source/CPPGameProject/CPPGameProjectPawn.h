@@ -13,7 +13,7 @@ class UInputComponent;
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
-UCLASS(config=Game)
+UCLASS(config = Game)
 class ACPPGameProjectPawn : public AWheeledVehicle
 {
 	GENERATED_BODY()
@@ -42,7 +42,7 @@ class ACPPGameProjectPawn : public AWheeledVehicle
 	UPROPERTY(Category = Display, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UTextRenderComponent* InCarGear;
 
-	
+
 public:
 	ACPPGameProjectPawn();
 
@@ -106,13 +106,13 @@ public:
 	static const FName LookRightBinding;
 
 private:
-	/** 
+	/**
 	 * Activate In-Car camera. Enable camera and sets visibility of incar hud display
 	 *
 	 * @param	bState true will enable in car view and set visibility of various if its doesnt match new state
 	 * @param	bForce true will force to always change state
 	 */
-	void EnableIncarView( const bool bState, const bool bForce = false );
+	void EnableIncarView(const bool bState, const bool bForce = false);
 
 	/** Update the gear and speed strings */
 	void UpdateHUDStrings();
@@ -135,4 +135,3 @@ public:
 };
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
-
