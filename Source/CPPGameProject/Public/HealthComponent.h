@@ -16,6 +16,24 @@ public:
 	// Sets default values for this component's properties
 	UHealthComponent();
 
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	UParticleSystem* ElectricalEffect;
+
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	UParticleSystem* SmokeMediumEffect;
+
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	UParticleSystem* SmokeHeavyEffect;
+
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	UParticleSystem* SmallFireEffect;
+
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	UParticleSystem* LargeFireEffect;
+
+	UPROPERTY()
+	UParticleSystemComponent* ActiveEffect = nullptr;
+
 	/*UFUNCTION()
 	void TakeDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCause);*/
 
