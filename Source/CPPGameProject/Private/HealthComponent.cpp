@@ -63,7 +63,9 @@ void UHealthComponent::TakeDamage(AActor* DamagedActor, float Damage, const UDam
         if (ActiveEffect && ActiveEffect->Template != ElectricalEffect)
         {
             ActiveEffect->DestroyComponent();
+            ActiveEffect = nullptr;
         }
+
 
         if (!ActiveEffect && ElectricalEffect)
         {
@@ -77,7 +79,9 @@ void UHealthComponent::TakeDamage(AActor* DamagedActor, float Damage, const UDam
         if (ActiveEffect && ActiveEffect->Template != SmokeMediumEffect)
         {
             ActiveEffect->DestroyComponent();
+            ActiveEffect = nullptr;
         }
+
 
         if (!ActiveEffect && SmokeMediumEffect)
         {
@@ -91,7 +95,9 @@ void UHealthComponent::TakeDamage(AActor* DamagedActor, float Damage, const UDam
         if (ActiveEffect && ActiveEffect->Template != SmokeHeavyEffect)
         {
             ActiveEffect->DestroyComponent();
+            ActiveEffect = nullptr;
         }
+
 
         if (!ActiveEffect && SmokeHeavyEffect)
         {
@@ -105,7 +111,9 @@ void UHealthComponent::TakeDamage(AActor* DamagedActor, float Damage, const UDam
         if (ActiveEffect && ActiveEffect->Template != SmallFireEffect)
         {
             ActiveEffect->DestroyComponent();
+            ActiveEffect = nullptr;
         }
+
 
         if (!ActiveEffect && SmallFireEffect)
         {
@@ -121,7 +129,9 @@ void UHealthComponent::TakeDamage(AActor* DamagedActor, float Damage, const UDam
         if (ActiveEffect && ActiveEffect->Template != LargeFireEffect)
         {
             ActiveEffect->DestroyComponent();
+            ActiveEffect = nullptr;
         }
+
 
         if (!ActiveEffect && LargeFireEffect)
         {
